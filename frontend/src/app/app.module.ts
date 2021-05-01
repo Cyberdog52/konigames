@@ -28,13 +28,6 @@ import {WerevoteComponent} from './game/werwoerter/werevote/werevote.component';
 import {WerewolfswonComponent} from './game/werwoerter/werewolfswon/werewolfswon.component';
 import {CitizenwonComponent} from './game/werwoerter/citizenwon/citizenwon.component';
 import {CitizenvoteComponent} from './game/werwoerter/citizenvote/citizenvote.component';
-import {MainComponent} from './main/main.component';
-import {CocktailComponent} from './main/cocktail/cocktail.component';
-import {CocktailRecipeComponent} from './main/cocktail/recipe/cocktail-recipe.component';
-import {CocktailInstructionsComponent} from './main/cocktail/recipe/cocktail-instructions/cocktail-instructions.component';
-import {SearchCocktailComponent} from './main/cocktail/search-cocktail/search-cocktail.component';
-import {CompletelyRandomCocktailComponent} from './main/cocktail/completely-random-cocktail/completely-random-cocktail.component';
-import {FilterCocktailComponent} from './main/cocktail/filter-cocktail/filter-cocktail.component';
 import {WerwoelfleComponent} from './game/werwoelfle/werwoelfle.component';
 import {DayPhaseComponent} from "./game/werwoelfle/dayphase/day-phase.component";
 import {WerwoelfleRoleComponent} from "./game/werwoelfle/role/werwoelfle-role.component";
@@ -50,24 +43,8 @@ import {AvatarpickerComponent} from './game/leiterli/avatarpicker/avatarpicker.c
 import {TopbarComponent} from './game/leiterli/topbar/topbar.component';
 import {MoveVisualisationComponent} from './game/leiterli/move-visualisation/move-visualisation.component';
 import {TempelComponent} from './game/tempel/tempel.component';
-import {DialogDeleteMenu, MenuTableComponent} from './menu/menu/menu-table/menu-table.component';
-import {DialogDeleteRecipe, RecipeTableComponent} from "./menu/recipe/recipe-table/recipe-table.component";
-import {RecipeOverviewComponent} from './menu/recipe/recipe-overview/recipe-overview.component';
-import {MenuOverviewComponent} from './menu/menu/menu-overview/menu-overview.component';
-import {MenuMainComponent} from './menu/menu-main.component';
-import {IngredientTableComponent} from './menu/recipe/recipe-overview/ingredient-table/ingredient-table.component';
-import {MenuIngredientTableComponent} from './menu/menu/menu-ingredient-table/menu-ingredient-table.component';
 import {CdkColumnDef} from "@angular/cdk/table";
-import {FlurComponent} from "./flur/flur.component";
 import {ChartsModule} from "angular-bootstrap-md";
-import { FlurTemperatureComponent } from './flur/flur-temperature/flur-temperature.component';
-import { FlurLevelComponent } from './flur/flur-level/flur-level.component';
-import { FlurDischargeComponent } from './flur/flur-discharge/flur-discharge.component';
-import { FlurTabBaseComponent } from './flur/flur-tab-base/flur-tab-base.component';
-import { WeatherTemperatureComponent } from './flur/weather-temperature/weather-temperature.component';
-import { WeatherWindComponent } from './flur/weather-wind/weather-wind.component';
-import { WeatherRainComponent } from './flur/weather-rain/weather-rain.component';
-import { FlurOverviewComponent } from './flur/flur-overview/flur-overview.component';
 
 @NgModule({
   declarations: [
@@ -88,13 +65,6 @@ import { FlurOverviewComponent } from './flur/flur-overview/flur-overview.compon
     WerewolfswonComponent,
     CitizenwonComponent,
     CitizenvoteComponent,
-    MainComponent,
-    CocktailComponent,
-    RecipeTableComponent,
-    CocktailInstructionsComponent,
-    SearchCocktailComponent,
-    CompletelyRandomCocktailComponent,
-    FilterCocktailComponent,
     WerwoelfleComponent,
     DayPhaseComponent,
     WerwoelfleRoleComponent,
@@ -110,27 +80,8 @@ import { FlurOverviewComponent } from './flur/flur-overview/flur-overview.compon
     TopbarComponent,
     MoveVisualisationComponent,
     TempelComponent,
-    MoveVisualisationComponent,
-    MenuTableComponent,
-    DialogDeleteMenu,
-    CocktailRecipeComponent,
-    DialogDeleteRecipe,
-    RecipeOverviewComponent,
-    MenuOverviewComponent,
-    MenuMainComponent,
-    IngredientTableComponent,
-    MenuIngredientTableComponent,
-    FlurComponent,
-    FlurTemperatureComponent,
-    FlurLevelComponent,
-    FlurDischargeComponent,
-    FlurTabBaseComponent,
-    WeatherTemperatureComponent,
-    WeatherWindComponent,
-    WeatherRainComponent,
-    FlurOverviewComponent
+    MoveVisualisationComponent
   ],
-  entryComponents: [DialogDeleteMenu, DialogDeleteRecipe],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),

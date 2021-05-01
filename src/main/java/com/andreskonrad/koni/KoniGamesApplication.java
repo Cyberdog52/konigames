@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KoniApplication {
+public class KoniGamesApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KoniApplication.class, args);
+        SpringApplication.run(KoniGamesApplication.class, args);
     }
 
 }
