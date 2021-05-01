@@ -3,6 +3,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'koni'
+rootProject.name = 'konigames'
 include 'frontend'
 include 'src'

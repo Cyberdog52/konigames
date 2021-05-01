@@ -20,7 +20,18 @@ bootJar {
 }
 bootJar.dependsOn ":frontend:npm_run_dist"
 
+processResources {
+    def profile = (project.hasProperty('profile') ? project.profile : 'prod').toLowerCase()
 
+    include "banner.txt"
+    include "werwoerter"
+
+    include "application_${profile}.properties"
+    rename { fileName ->
+        fileName.replace("_$profile", "")
+    }
+
+}
 
 configurations {
     developmentOnly
