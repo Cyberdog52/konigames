@@ -15,12 +15,12 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.setTitle('Koni');
+    this.setTitle('Konigames');
   }
 
   public static getSocketUrl(): string {
     if (environment.production) {
-      return 'http://andreskonrad.herokuapp.com/socket';
+      return 'http://konigames.herokuapp.com/socket';
     } else {
       return 'http://localhost:8080/socket';
     }

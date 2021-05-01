@@ -1,11 +1,11 @@
 <mat-toolbar *ngIf="isLoggedIn()">
-  <h1>Koni</h1>
+  <h1>Konigames</h1>
   <span class="filler"></span>
   <button *ngIf="isLoggedIn()" type="button" routerLink="/lobby" mat-button>
     <mat-icon>group</mat-icon>
     Lobby
   </button>
-  <button [hidden]="isLoggedIn()" type="button" mat-button *ngIf="loggedInProfile && loggedInProfile.identity.name" routerLink="/profile" >
+  <button [hidden]="isLoggedIn()" type="button" mat-button *ngIf="loggedInProfile && loggedInProfile.identity.name" routerLink="/lobby" >
     <mat-icon>account_circle</mat-icon>
     {{ loggedInProfile.identity.name }}
   </button>
