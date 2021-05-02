@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {LeiterliField, LeiterliGame, LeiterliHistoryBlock} from "../../../shared/model/leiterli-dtos";
 import {Player} from "../../../shared/model/dtos";
 import {LeiterliHeadIcon} from "../board/board.component";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 import {LeiterliService} from "../leiterli.service";
 import {ToastrService} from "ngx-toastr";
 import {AvatarpickerComponent} from "../avatarpicker/avatarpicker.component";
@@ -14,7 +14,7 @@ import {AvatarpickerComponent} from "../avatarpicker/avatarpicker.component";
 })
 export class FieldComponent implements OnInit {
 
-  constructor(private profileService: ProfileService,
+  constructor(private profileService: IdentityService,
               private leiterliService: LeiterliService,
               private toastrService: ToastrService) {
   }
@@ -163,7 +163,6 @@ export class FieldComponent implements OnInit {
   wantsToRollOnCorrectField(): boolean {
     let playerEqualstoLoggedInPlayer = false;
     this.players.forEach(player => {
-      console.log(player);
       if (player.name == this.getPlayerName() ) {
         playerEqualstoLoggedInPlayer = true;
       }
@@ -184,7 +183,6 @@ export class FieldComponent implements OnInit {
       return;
     }
     this.leiterliService.roll(this.leiterliGame.game.name, this.getPlayerName()).subscribe(next=> {
-      console.log("rolled");
     });
   }
 

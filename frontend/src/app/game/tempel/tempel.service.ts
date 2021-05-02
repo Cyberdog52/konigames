@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import {Observable} from "rxjs";
 import {TempelGame, TempelRole} from "../../shared/model/tempel-dtos";
 
@@ -12,7 +12,7 @@ export class TempelGameService {
   private backendUrl = "api/game/tempel/";
 
   constructor(private httpClient: HttpClient,
-              private profileService: ProfileService) {
+              private profileService: IdentityService) {
   }
 
   public getRole(tempelGame: TempelGame): TempelRole {

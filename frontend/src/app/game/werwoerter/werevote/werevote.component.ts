@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {WerwoerterGame, WerwoerterRole} from "../../../shared/model/werwoerter-dtos";
 import {Player} from "../../../shared/model/dtos";
 import {WerwoerterService} from "../werwoerter.service";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 import {player1, player2, player3} from "../werwoerter-mock";
 
 @Component({
@@ -16,7 +16,7 @@ export class WerevoteComponent implements OnInit {
   selectedPlayerName: string;
 
   constructor(private werwoerterService: WerwoerterService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }
@@ -67,10 +67,8 @@ export class WerevoteComponent implements OnInit {
   }
 
   sendSelectedPlayer() {
-    console.log("sending selected playerName: ", this.selectedPlayerName);
     const playerName = this.profileService.getCurrentIdentity().name;
     this.werwoerterService.sendGuessPlayer(this.werwoerterGame.game.name, playerName, this.selectedPlayerName).subscribe(response => {
-      console.log("received vote response: ", response);
     })
   }
 

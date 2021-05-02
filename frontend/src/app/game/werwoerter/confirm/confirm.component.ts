@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WerwoerterGame} from "../../../shared/model/werwoerter-dtos";
 import {WerwoerterService} from "../werwoerter.service";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 
 @Component({
   selector: 'confirm',
@@ -13,7 +13,7 @@ export class ConfirmComponent implements OnInit {
   @Input() werwoerterGame : WerwoerterGame;
 
   constructor(private werwoerterService: WerwoerterService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }

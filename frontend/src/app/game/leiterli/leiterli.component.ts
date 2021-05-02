@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GameService} from "../../shared/game.service";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import * as SockJS from "sockjs-client";
 import {AppComponent} from "../../app.component";
 import * as Stomp from "stompjs";
@@ -25,7 +25,7 @@ export class LeiterliComponent implements OnInit {
 
   constructor(private gameService: GameService,
               private leiterliService: LeiterliService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
     this.initializeWebSocketConnection();
@@ -67,7 +67,6 @@ export class LeiterliComponent implements OnInit {
 
     this.leiterliService.getGame(this.getGameName()).subscribe( (game: LeiterliGame) => {
         this.leiterliGame = game;
-        console.log("Game: ", this.leiterliGame);
         this.handleUpdate(previousHistory, this.leiterliGame.history)
       }
     )

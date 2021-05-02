@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Player} from "../../../shared/model/dtos";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 import {WerwoelfleService} from "../werwoelfle.service";
 import {WerwoelfleGame, WerwoelfleRole} from "../../../shared/model/werwoelfle-dtos";
 
@@ -15,7 +15,7 @@ export class WerewolfPhaseComponent implements OnInit {
   selectedPlayerName: string;
 
   constructor(private werwoelfleService: WerwoelfleService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }
@@ -59,10 +59,8 @@ export class WerewolfPhaseComponent implements OnInit {
   }
 
   sendSelectedPlayer() {
-    console.log("sending selected playerName: ", this.selectedPlayerName);
     const playerName = this.profileService.getCurrentIdentity().name;
     this.werwoelfleService.vote(this.werwoelfleGame.game.name, playerName, this.selectedPlayerName).subscribe(response => {
-      console.log("received vote response: ", response);
     })
   }
 

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Game, GameType, Profile} from "../shared/model/dtos";
-import {ProfileService} from "../shared/profile.service";
+import {Game, GameType} from "../shared/model/dtos";
+import {IdentityService} from "../shared/identity.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import {ProfileService} from "../shared/profile.service";
 export class LobbyService {
   private backendUrl = "api/game/";
 
-  constructor(private httpClient: HttpClient, private profileService: ProfileService) {
+  constructor(private httpClient: HttpClient, private profileService: IdentityService) {
   }
 
   public getGames(): Observable<Game[]> {

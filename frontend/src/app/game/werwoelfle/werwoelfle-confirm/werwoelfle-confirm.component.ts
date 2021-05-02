@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 import {WerwoelfleGame} from "../../../shared/model/werwoelfle-dtos";
 import {WerwoelfleService} from "../werwoelfle.service";
 
@@ -13,7 +13,7 @@ export class WerwoelfleConfirmComponent implements OnInit {
   @Input() werwoelfleGame : WerwoelfleGame;
 
   constructor(private werwoelfleService: WerwoelfleService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import {Observable} from "rxjs";
 import {WerwoerterGame, WerwoerterMarker, WerwoerterRole} from "../../shared/model/werwoerter-dtos";
 
@@ -12,7 +12,7 @@ export class WerwoerterService {
   private backendUrl = "api/game/werwoerter/";
 
   constructor(private httpClient: HttpClient,
-              private profileService: ProfileService) {
+              private profileService: IdentityService) {
   }
 
   public getRole(werwoerterGame: WerwoerterGame): WerwoerterRole {

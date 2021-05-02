@@ -20,19 +20,6 @@ bootJar {
 }
 bootJar.dependsOn ":frontend:npm_run_dist"
 
-processResources {
-    def profile = (project.hasProperty('profile') ? project.profile : 'prod').toLowerCase()
-
-    include "banner.txt"
-    include "werwoerter"
-
-    include "application_${profile}.properties"
-    rename { fileName ->
-        fileName.replace("_$profile", "")
-    }
-
-}
-
 configurations {
     developmentOnly
     runtimeClasspath {
@@ -45,22 +32,20 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.kafka:spring-kafka'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
     compile 'org.springframework.boot:spring-boot-starter-data-rest'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.postgresql:postgresql'
-    //testImplementation 'org.springframework.security:spring-security-test'
     compile group: 'org.javatuples', name: 'javatuples', version: '1.2'
 
 
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 }

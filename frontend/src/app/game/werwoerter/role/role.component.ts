@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WerwoerterGame, WerwoerterRole} from "../../../shared/model/werwoerter-dtos";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 import {WerwoerterService} from "../werwoerter.service";
 
 @Component({

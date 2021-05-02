@@ -5,7 +5,7 @@ import * as Stomp from "stompjs";
 import {AppComponent} from "../../app.component";
 import {WerwoerterService} from "./werwoerter.service";
 import {WerwoerterGame, WerwoerterPhase} from "../../shared/model/werwoerter-dtos";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import {mockWerwoerterGame} from "./werwoerter-mock";
 
 @Component({
@@ -20,7 +20,7 @@ export class WerwoerterComponent implements OnInit {
 
   constructor(private gameService: GameService,
               private werwoerterService: WerwoerterService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
     this.initializeWebSocketConnection();
@@ -57,7 +57,6 @@ export class WerwoerterComponent implements OnInit {
   private getWerwoerterGame() {
     this.werwoerterService.getGame(this.getGameName()).subscribe( (game: WerwoerterGame) => {
       this.werwoerterGame = game;
-      console.log("Game: ", this.werwoerterGame);
       }
     )
   }

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from "../../shared/game.service";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import * as SockJS from "sockjs-client";
 import {AppComponent} from "../../app.component";
 import * as Stomp from "stompjs";
@@ -15,6 +15,8 @@ import {
 import {TempelGameService} from "./tempel.service";
 import {Player} from "../../shared/model/dtos";
 import {ToastrService} from "ngx-toastr";
+import {Subject} from "rxjs";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -22,18 +24,20 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './tempel.component.html',
   styleUrls: ['./tempel.component.scss']
 })
-export class TempelComponent implements OnInit {
+export class TempelComponent implements OnInit, OnDestroy {
 
   private stompClient;
   public tempelGame: TempelGame;
   private showSecretInfo: boolean;
   private mouseOverCard: TempelCard;
   private shownMessageIds: number[] = [];
+  private onDestroy$: Subject<void> = new Subject<void>();
+  private webSocket;
 
   constructor(private gameService: GameService,
               private tempelGameService: TempelGameService,
               private toastrService: ToastrService,
-              private profileService: ProfileService) {
+              private profileService: IdentityService) {
   }
 
   ngOnInit() {
@@ -46,12 +50,12 @@ export class TempelComponent implements OnInit {
     if (this.stompClient != null) {
       return;
     }
-    let ws = new SockJS(AppComponent.getSocketUrl());
-    this.stompClient = Stomp.over(ws);
+    this.webSocket = new SockJS(AppComponent.getSocketUrl());
+    this.stompClient = Stomp.over(this.webSocket);
     let that = this;
     this.stompClient.connect({}, function (frame) {
-      that.stompClient.unsubscribe();
-      that.stompClient.subscribe("/game", (message: Stomp.Message) => {
+      that.stompClient
+        .subscribe("/game", (message: Stomp.Message) => {
         const messageBody = message.body;
         if (messageBody.startsWith(that.getGameName())) {
           that.handleMessage(message.body);
@@ -74,9 +78,10 @@ export class TempelComponent implements OnInit {
   }
 
   private getTempelGame() {
-    this.tempelGameService.getGame(this.getGameName()).subscribe((game: TempelGame) => {
+    this.tempelGameService.getGame(this.getGameName())
+      .pipe(take(1))
+      .subscribe((game: TempelGame) => {
         this.handleChangeGameEvent(game);
-        console.log("Game: ", this.tempelGame);
       }
     )
   }
@@ -85,20 +90,20 @@ export class TempelComponent implements OnInit {
     if (newGame == null) {
       return;
     }
-    if (this.tempelGame != null && (newGame.game.name != this.tempelGame.game.name || this.tempelGame.resetCount < newGame.resetCount)) {
+    if (this.tempelGame != null && (newGame.game.name !== this.tempelGame.game.name || this.tempelGame.resetCount < newGame.resetCount)) {
       // this is a new game. reset state
       this.resetState();
     }
 
     this.showNewMessages(newGame.messages);
 
-    if (this.tempelGame != null && this.tempelGame.round != newGame.round) {
+    if (this.tempelGame != null && (this.tempelGame.round != newGame.round || newGame.state != TempelState.RUNNING) ) {
       this.tempelGame.keyPlayer = null;
       const newOpenedCard = this.tempelGame.cards.find(tempelCard => tempelCard.id == newGame.lastOpenedCard.id);
       newOpenedCard.opened = true;
       setTimeout(() => {
         this.tempelGame = newGame;
-      }, 4000)
+      }, 4000);
     } else {
       this.tempelGame = newGame;
     }
@@ -300,8 +305,9 @@ export class TempelComponent implements OnInit {
     const playerName = this.profileService.getCurrentIdentity().name;
     if (this.hasKey() && playerName != player.name && !card.opened) {
       this.tempelGame.keyPlayer = null;
-      this.tempelGameService.open(this.tempelGame.game.name, card.id).subscribe(response => {
-        console.log("opened card");
+      this.tempelGameService.open(this.tempelGame.game.name, card.id)
+        .pipe(take(1))
+        .subscribe(response => {
       })
     }
   }
@@ -344,8 +350,9 @@ export class TempelComponent implements OnInit {
 
   restartGame() {
     const playerName = this.profileService.getCurrentIdentity().name;
-    this.tempelGameService.restart(this.tempelGame.game.name, playerName).subscribe(result => {
-      console.log(result);
+    this.tempelGameService.restart(this.tempelGame.game.name, playerName)
+      .pipe(take(1))
+      .subscribe(result => {
     });
     this.resetState();
   }
@@ -383,8 +390,11 @@ export class TempelComponent implements OnInit {
     return openedLeer + "/" + this.tempelGame.totalLeer;
   }
 
-  getPlayers() {
-
+  ngOnDestroy(): void {
+    this.webSocket.close();
+    this.stompClient.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.unsubscribe();
   }
 }
 

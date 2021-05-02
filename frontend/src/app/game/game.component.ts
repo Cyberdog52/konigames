@@ -53,7 +53,6 @@ export class GameComponent implements OnInit {
   getNumberOfPlayers(): number {
     const game = this.gameService.currentGame;
     if (game == null) {
-      console.log("No game found");
       this.router.navigateByUrl("/lobby");
       return 0;
     } else {

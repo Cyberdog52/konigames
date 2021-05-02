@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {LeiterliGame} from "../../../shared/model/leiterli-dtos";
 import {LeiterliService} from "../leiterli.service";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 
 export interface AvatarOption {
   title: string,
@@ -127,7 +127,7 @@ export class AvatarpickerComponent implements OnInit, OnChanges {
   }
 
   constructor(private leiterliService: LeiterliService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }
@@ -172,8 +172,6 @@ export class AvatarpickerComponent implements OnInit, OnChanges {
       });
     });
     this.avatarGroups = avatarGroups;
-
-    console.log(this.avatarGroups);
   }
 
   public getPlayerName(): string {
@@ -186,7 +184,6 @@ export class AvatarpickerComponent implements OnInit, OnChanges {
 
   pickAvatar() {
   this.leiterliService.avatar(this.leiterliGame.game.name, this.getPlayerName(), this.pickedAvatar).subscribe( response => {
-    console.log("saved avatar");
   });
   }
 }

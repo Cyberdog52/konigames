@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WerwoerterGame, WerwoerterMarker} from "../../../shared/model/werwoerter-dtos";
 import {WerwoerterService} from "../werwoerter.service";
-import {ProfileService} from "../../../shared/profile.service";
+import {IdentityService} from "../../../shared/identity.service";
 
 @Component({
   selector: 'ask',
@@ -24,7 +24,7 @@ export class AskComponent implements OnInit {
   Arr = Array;
 
   constructor(private werwoerterService: WerwoerterService,
-              private profileService: ProfileService) { }
+              private profileService: IdentityService) { }
 
   ngOnInit() {
   }
@@ -57,7 +57,6 @@ export class AskComponent implements OnInit {
 
   sendMarker(marker: WerwoerterMarker) {
     this.werwoerterService.addMarker(this.werwoerterGame.game.name, marker).subscribe(response => {
-      console.log("response markers: ", response);
     });
   }
 

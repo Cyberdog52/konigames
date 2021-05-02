@@ -1,8 +1,54 @@
-.example-container {
+.container {
+  display: block;
+  margin-top: 2vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: transparent;
+  max-width: 600px;
+}
+
+.mat-form-field {
+  display: block;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: min(350px, 100%);
+}
+
+.button-row {
+  margin-bottom: 3vh;
+}
+
+.row {
+  margin-top: 1vh;
+}
+
+.logo {
+  display: block;
+  margin-top: 8vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  max-width: 700px;
+}
+
+.login-container {
   display: flex;
   flex-direction: column;
 }
 
-.example-container > * {
+.login-container > * {
   width: 100%;
+}
+
+.los-button {
+  background-color: #008043;
+  color: white;
+  display: block;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: min(350px, 100%);
 }

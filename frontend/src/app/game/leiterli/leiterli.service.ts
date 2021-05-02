@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {ProfileService} from "../../shared/profile.service";
+import {IdentityService} from "../../shared/identity.service";
 import {Observable, Subject} from "rxjs";
 import {LeiterliGame, LeiterliHistoryBlock} from "../../shared/model/leiterli-dtos";
-import {Profile} from "../../shared/model/dtos";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class LeiterliService {
   private _animateHistoryBlock$: Subject<LeiterliHistoryBlock> = new Subject();
 
   constructor(private httpClient: HttpClient,
-              private profileService: ProfileService) {
+              private profileService: IdentityService) {
   }
 
   public getGame(gameName: string): Observable<LeiterliGame> {

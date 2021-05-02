@@ -5,11 +5,11 @@
     <mat-icon>group</mat-icon>
     Lobby
   </button>
-  <button [hidden]="isLoggedIn()" type="button" mat-button *ngIf="loggedInProfile && loggedInProfile.identity.name" routerLink="/lobby" >
+  <button [hidden]="isLoggedIn()" type="button" mat-button *ngIf="loggedInIdentity && loggedInIdentity.name" routerLink="/lobby" >
     <mat-icon>account_circle</mat-icon>
-    {{ loggedInProfile.identity.name }}
+    {{ loggedInIdentity.name }}
   </button>
-  <button *ngIf="isLoggedIn()" type="button" routerLink="/login" (click)="profileService.logout()" mat-button>
+  <button *ngIf="isLoggedIn()" type="button" routerLink="/login" (click)="identityService.logout()" mat-button>
     <mat-icon>exit_to_app</mat-icon>
     Logout
   </button>

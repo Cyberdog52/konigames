@@ -1,25 +1,19 @@
-<mat-card>
-  <mat-card-title>Login</mat-card-title>
-  <mat-card-content>
-    <div class="example-container">
-      <mat-form-field >
-        <input [(ngModel)]="name" (keyup)="checkIfProfileExists()" matInput type="text" placeholder="Name">
-      </mat-form-field>
-      <mat-form-field>
-        <input [(ngModel)]="password_plain" matInput type="password" placeholder="Passwort"/>
+<div class="login-component-class">
+  <img class="logo" src="../../assets/logo.png">
+  <div class="container">
+
+    <div class="row">
+      <mat-form-field class="col-lg-12" >
+        <input [(ngModel)]="name" matInput type="text" placeholder="Benutzername">
       </mat-form-field>
     </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="accent"
-            [disabled]="!profileExists || isNameNotAllowed()"
-            (click)="login()">Einloggen</button>
-    <button *ngIf="isNameNotAllowed()" matTooltip="Spezialzeichen sind nicht erlaubt"
-            mat-raised-button color="warn">Neues Profil erstellen
-    </button>
-    <button *ngIf="!isNameNotAllowed()" mat-raised-button color="accent"
-            [disabled]="createProfileDisabled()"
-            (click)="create()">Neues Profil erstellen
-    </button>
-  </mat-card-actions>
-</mat-card>
+
+    <div class="row">
+      <button mat-raised-button class="los-button"
+              [disabled]="isNameNotAllowed()"
+              (click)="login()">Einloggen</button>
+    </div>
+
+  </div>
+
+</div>

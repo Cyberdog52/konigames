@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from "../profile.service";
-import {Profile} from "../model/dtos";
+import {IdentityService} from "../identity.service";
+import {Identity} from "../model/dtos";
 
 @Component({
   selector: 'app-navigation',
@@ -9,19 +9,19 @@ import {Profile} from "../model/dtos";
 })
 export class NavigationComponent implements OnInit {
 
-  loggedInProfile: Profile;
+  loggedInIdentity: Identity;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private identityService: IdentityService) { }
 
   ngOnInit() {
-    this.loggedInProfile = JSON.parse(sessionStorage.getItem('profile'));
-    this.profileService.loggedInProfile.subscribe(loggedInProfile => {
-      this.loggedInProfile = loggedInProfile
+    this.loggedInIdentity = this.identityService.getCurrentIdentity();
+    this.identityService.loggedInProfile.subscribe(loggedInIdentity => {
+      this.loggedInIdentity = loggedInIdentity
     });
 
   }
 
   isLoggedIn(): boolean {
-    return !!this.loggedInProfile;
+    return !!this.loggedInIdentity;
   }
 }

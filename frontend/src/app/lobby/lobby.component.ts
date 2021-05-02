@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Game, GameState, GameType} from "../shared/model/dtos";
 import {LobbyService} from "./lobby.service";
 import {MessageService} from "../shared/message.service";
-import {ProfileService} from "../shared/profile.service";
+import {IdentityService} from "../shared/identity.service";
 import {GameService} from "../shared/game.service";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {Router} from "@angular/router";
 import {AppComponent} from "../app.component";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-lobby',
@@ -27,7 +28,7 @@ export class LobbyComponent implements OnInit {
 
   constructor(private lobbyService: LobbyService,
               private messageService: MessageService,
-              private profileService: ProfileService,
+              private profileService: IdentityService,
               private gameService: GameService,
               private router: Router) {
   }
@@ -39,7 +40,6 @@ export class LobbyComponent implements OnInit {
 
   fetchGames() {
     this.lobbyService.getGames().subscribe(games => {
-      console.log("Fetched allGames: ", games);
       this.allGames = games;
     });
   }
@@ -81,8 +81,7 @@ export class LobbyComponent implements OnInit {
   }
 
   startGame(game: Game) {
-    this.lobbyService.startGame(game).subscribe(value =>
-      console.log(value));
+    this.lobbyService.startGame(game).subscribe(() => {});
   }
 
   alreadyJoined(game: Game) {
@@ -126,8 +125,6 @@ export class LobbyComponent implements OnInit {
   }
 
   hasCreated(game: Game) {
-    console.log("Creator: " + game.creator);
-    console.log("Identity: " + this.profileService.getCurrentIdentity().name);
     return game.creator == this.profileService.getCurrentIdentity().name;
   }
 
@@ -270,7 +267,6 @@ export class LobbyComponent implements OnInit {
   }
 
   isDestroyGameEnabled(game: Game): boolean {
-    console.log("checking destroy enabled");
     return this.hasCreated(game) ;
   }
 }

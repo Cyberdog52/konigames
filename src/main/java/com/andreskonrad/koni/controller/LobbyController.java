@@ -2,7 +2,6 @@ package com.andreskonrad.koni.controller;
 
 import com.andreskonrad.koni.dto.Game;
 import com.andreskonrad.koni.dto.GameType;
-import com.andreskonrad.koni.dto.Profile;
 import com.andreskonrad.koni.service.LobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/game")

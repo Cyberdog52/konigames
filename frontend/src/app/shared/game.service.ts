@@ -10,13 +10,11 @@ export class GameService {
   public currentGame : Game;
 
   subscribe(game: Game) {
-    console.log("Subscribed: ", game);
   }
 
   constructor(){
   }
 
   unsubscribe(game: Game) {
-    console.log("Unsubscribed: ", game);
   }
 }

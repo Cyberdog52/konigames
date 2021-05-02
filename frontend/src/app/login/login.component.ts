@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ProfileService} from "../shared/profile.service";
-import {Identity, Profile} from "../shared/model/dtos";
+import {IdentityService} from "../shared/identity.service";
+import {Identity} from "../shared/model/dtos";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,10 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class LoginComponent implements OnInit {
 
-  name: string = "";
-  password_plain: string = "";
-  profileExists: boolean = false;
+  name : string = "";
+  identityExists: boolean = false;
 
-  constructor(private profileService: ProfileService,
+  constructor(private identityService: IdentityService,
               private router: Router,
               private toastrService: ToastrService
   ) { }
@@ -25,51 +25,42 @@ export class LoginComponent implements OnInit {
   }
 
   checkIfProfileExists() {
+    if (this.name == null || this.name.length === 0) {
+      return false;
+    }
     if (this.isNameNotAllowed()) {
       this.toastrService.info('Sonderzeichen sind nicht erlaubt.', 'Achtung');
       return false;
     }
-    this.profileService.getProfile(this.name).subscribe(profile => {
-      this.profileExists = true;
-    }, error => {
-      this.profileExists = false;
-      console.log(error)
+    this.identityService.getIdentity(this.name)
+      .pipe(take(1))
+      .subscribe(profile => {
+      this.identityExists = true;
+    }, () => {
+      this.identityExists = false;
     })
   }
 
-  login() {
-    const profile = this.createProfile();
-    this.profileService.login(profile).subscribe(status => {
-      this.loginLogic(profile)
+  login(): void {
+    const identity = this.createIdentity();
+    this.identityService.login(identity)
+      .pipe(take(1))
+      .subscribe(() => {
+      this.loginLogic(identity)
     }, error=> {
       this.displayLogin(error);
-      this.password_plain = "";
-      console.log(error)
     });
   }
 
-  loginLogic(profile: Profile) {
-    this.profileService.setLocalProfile(profile);
-    this.profileService.updateLoggedInProfile(profile);
+  loginLogic(identity: Identity) {
+    this.identityService.setLocalProfile(identity);
+    this.identityService.updateLoggedInProfile(identity);
     this.router.navigateByUrl('lobby')
   }
 
-  create() {
-    const profile = this.createProfile();
-    this.profileService.createProfile(profile).subscribe(status => {
-      this.loginLogic(profile)
-    }, error=> {
-      this.displayCreate(error);
-      console.log(error)
-    });
-  }
-
-  private createProfile(): Profile {
+  private createIdentity(): Identity {
     return {
-      identity: <Identity> {
-        name: this.name
-      },
-      password_plain: this.password_plain,
+      name: this.name
     }
   }
 
@@ -92,39 +83,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private displayCreate(error) {
-    if (error instanceof HttpErrorResponse) {
-      switch (error.status) {
-        case 304: {
-          this.toastrService.error('A profile with this username already exists. No profile was created.', 'Sign up failure');
-          break
-        }
-        case 504: {
-          this.toastrService.error('Connection problem with backend.', 'Sign up failure');
-          break
-        }
-        default: {
-          this.toastrService.error('Unknown problem.', 'Sign up failure');
-        }
-      }
-    }
-  }
-
   isNameNotAllowed() {
-    if (this.name == null || this.name.length == 0) {
-      return false;
+    if (this.name == null || this.name.length === 0) {
+      return true;
     }
-    console.log("name: ", this.name);
     const pattern = /^[a-zA-Z0-9]*$/;
     return !this.name.match(pattern);
-  }
-
-
-  createProfileDisabled() {
-    return this.profileExists ||
-      this.name.length == 0 ||
-      this.isNameNotAllowed() ||
-      this.password_plain.length == 0;
   }
 }
 
