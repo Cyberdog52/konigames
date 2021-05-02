@@ -45,6 +45,7 @@ import {MoveVisualisationComponent} from './game/leiterli/move-visualisation/mov
 import {TempelComponent} from './game/tempel/tempel.component';
 import {CdkColumnDef} from "@angular/cdk/table";
 import {ChartsModule} from "angular-bootstrap-md";
+import { PrettyButtonComponent } from './shared/pretty-button/pretty-button.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import {ChartsModule} from "angular-bootstrap-md";
     TopbarComponent,
     MoveVisualisationComponent,
     TempelComponent,
-    MoveVisualisationComponent
+    MoveVisualisationComponent,
+    PrettyButtonComponent
   ],
   imports: [
     BrowserModule,

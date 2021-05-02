@@ -1,0 +1,6 @@
+<div class="container" [ngClass]="[type, disabled ? 'disabled' : 'enabled', floatLeft ? 'float-left' : 'no-float']" matTooltip="{{getTooltip()}}" (click)="onClick($event)">
+  <span class="overlay"></span>
+  <div class="row">
+    <mat-icon class="main-icon">{{iconName}}</mat-icon>
+  </div>
+</div>

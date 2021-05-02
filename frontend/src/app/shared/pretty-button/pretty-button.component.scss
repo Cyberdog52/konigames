@@ -1,0 +1,80 @@
+
+
+.container {
+  border-radius: 4px;
+  font-size: larger;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 36px;
+  vertical-align: middle;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.container.float-left {
+  float:left
+}
+
+.container.enabled {
+  cursor: pointer;
+}
+
+.container.disabled {
+  cursor: default;
+  background-color: #eaeaea;
+  color: grey;
+}
+
+.blue-style {
+  color: #9aa8ff;
+}
+
+.red-style {
+  color: #ff9592;
+}
+
+.green-style {
+  color: #7cc577;
+}
+
+.container:hover:not(.disabled) {
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3);
+  color: white;
+}
+
+.container:hover:not(.disabled).green-style {
+  background-color: #7cc577;
+}
+
+.container:hover:not(.disabled).red-style {
+  background-color: #ff9592;
+}
+
+.container:hover:not(.disabled).blue-style {
+  background-color: #9aa8ff;
+}
+
+.overlay {
+  display: block;
+  opacity: 0;
+  background: rgba(0,0,0,.5);
+  -moz-transition: all 1s;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.overlay:hover {
+  opacity: 1;
+}
+
+.main-icon {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  align-self: center;
+  height: 36px;
+}

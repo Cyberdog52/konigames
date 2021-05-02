@@ -8,7 +8,6 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {Router} from "@angular/router";
 import {AppComponent} from "../app.component";
-import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-lobby',
@@ -25,6 +24,8 @@ export class LobbyComponent implements OnInit {
   MIN_PLAYER_PER_GAME: number = 3;
 
   private stompClient;
+
+  isShowingCreateMenu: Boolean = false;
 
   constructor(private lobbyService: LobbyService,
               private messageService: MessageService,
@@ -52,10 +53,10 @@ export class LobbyComponent implements OnInit {
     return this.allGames.filter(game => game.state == GameState.RUNNING);
   }
 
+
   getFinishedGames(): Game[] {
     return this.allGames.filter(game => game.state == GameState.FINISHED);
   }
-
 
   createGame() {
     this.isShowingCreateMenu = false;
@@ -65,13 +66,13 @@ export class LobbyComponent implements OnInit {
     });
     this.selectedGameType = null;
   }
-
   joinGame(game: Game) {
     this.lobbyService.joinGame(game.name).subscribe(game => {
       this.fetchGames();
       this.subscribeTo(game);
     });
   }
+
   private subscribeTo(game: Game) {
     this.gameService.subscribe(game);
   }
@@ -114,9 +115,9 @@ export class LobbyComponent implements OnInit {
       return player.name.localeCompare(name) == 0;
     }).length > 0;
   }
-
   concat = (x, y) =>
     x.concat(y);
+
   flatMap = (f, xs) =>
     xs.map(f).reduce(this.concat, []);
 
@@ -233,19 +234,8 @@ export class LobbyComponent implements OnInit {
     }
   }
 
-  isShowingCreateMenu: Boolean = false;
-
-  createButtonHidden() {
-    return this.isShowingCreateMenu;
-  }
-
-  showCreateMenu() {
-    this.isShowingCreateMenu = true;
-    this.selectedGameType = null;
-  }
-
   showCreateCard() {
-    return !this.isShowingCreateMenu && !this.hasAlreadyJoinedGame();
+    return !this.hasAlreadyJoinedGame();
   }
 
   private getNewGameName() {

@@ -1,9 +1,5 @@
 <div class="container">
   <mat-card *ngIf="showCreateCard()">
-    <mat-card-title>Neues Spiel</mat-card-title>
-    <button class="create-button" mat-raised-button color="primary" (click)="showCreateMenu()">Spiel erstellen</button>
-  </mat-card>
-  <mat-card *ngIf="isShowingCreateMenu">
     <mat-card-title>
       Neues Spiel
     </mat-card-title>
@@ -15,9 +11,14 @@
             <mat-option value="{{gameType}}">{{gameTypeToStr(gameType)}}</mat-option>
           </div>
         </mat-select>
+
       </mat-form-field>
-      <button mat-button (click)="createGame()" [disabled]="createGameDisabled()">Spiel erstellen</button>
+      <pretty-button [disabled]="createGameDisabled()" [disabledDescription]="'Wähle zuerst ein Spiel aus'" [type]="'green-style'" [iconName]="'add'" [title]="'Spiel erstellen'" (btnClick)="createGame()"></pretty-button>
+
     </mat-card-content>
+    <mat-card-actions align="end">
+
+    </mat-card-actions>
   </mat-card>
   <mat-card *ngIf="getCreatedGames().length > 0">
     <mat-card-title>Erstellte Spiele</mat-card-title>
@@ -29,21 +30,18 @@
             <div class="game_title">{{game.name}}</div>
           </mat-panel-title>
           <mat-panel-description>
+            <span class="warn" *ngIf="game.players.length<MIN_PLAYER_PER_GAME">Mindestens {{MIN_PLAYER_PER_GAME}} Spieler</span>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <player-list [game]="game"></player-list>
         <game-settings [game]="game"></game-settings>
-        <div class="button-bar">
-          <button mat-button (click)="$event.stopPropagation(); joinGame(game)" [disabled]="isJoinDisabled(game)">Mitspielen</button>
-          <span class="filler"></span>
-          <span class="warn" *ngIf="game.players.length<MIN_PLAYER_PER_GAME">Mindestens {{MIN_PLAYER_PER_GAME}} Spieler</span>
-          <span class="filler"></span>
-          <button mat-button (click)="leave(game)" [disabled]="isLeaveDisabled(game)">Verlassen</button>
-          <span class="filler"></span>
-          <button mat-button (click)="delete(game)" *ngIf="!isDeleteHidden(game)">Spiel löschen</button>
-          <span class="filler" *ngIf="!isDeleteHidden(game)"></span>
-          <button mat-button (click)="startGame(game)" [disabled]="isStartGameDisabled(game)">Starten</button>
-        </div>
+
+        <mat-card-actions>
+          <pretty-button *ngIf="!isJoinDisabled(game)" [type]="'green-style'" [iconName]="'add'" [title]="'Beitreten'" (btnClick)="joinGame(game)" [floatLeft]="true"></pretty-button>
+          <pretty-button *ngIf="!isDeleteHidden(game)" [type]="'red-style'" [iconName]="'delete_forever'" [title]="'Spiel löschen'" (btnClick)="delete(game)" [floatLeft]="true"></pretty-button>
+          <pretty-button *ngIf="!isLeaveDisabled(game)" [type]="'red-style'" [iconName]="'clear'" [title]="'Verlassen'" (btnClick)="leave(game)" [floatLeft]="true"></pretty-button>
+          <pretty-button [disabled]="isStartGameDisabled(game)" [disabledDescription]="'Du darfst das Spiel nicht starten'" [type]="'green-style'" [iconName]="'play_arrow'" [title]="'Starten'" (btnClick)="startGame(game)" [floatLeft]="true"></pretty-button>
+        </mat-card-actions>
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card>
@@ -60,12 +58,11 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <player-list [game]="game"></player-list>
-        <div class="button-bar">
-          <button mat-button (click)="$event.stopPropagation(); reconnect(game)" [disabled]="!isReconnectEnabled(game)">Erneut verbinden</button>
-          <span class="filler"></span>
-          <span class="filler" *ngIf="isDestroyGameEnabled(game)"></span>
-          <button mat-button (click)="delete(game)" *ngIf="isDestroyGameEnabled(game)">Spielabbruch</button>
-        </div>
+
+        <mat-card-actions>
+          <pretty-button *ngIf="isReconnectEnabled(game)" [type]="'blue-style'" [iconName]="'redo'" [title]="'Erneut verbinden'" (btnClick)="reconnect(game)" [floatLeft]="true"></pretty-button>
+          <pretty-button *ngIf="isDestroyGameEnabled(game)" [type]="'red-style'" [iconName]="'delete_forever'" [title]="'Spielabbruch'" (btnClick)="delete(game)" [floatLeft]="true"></pretty-button>
+        </mat-card-actions>
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card>
